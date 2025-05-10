@@ -91,26 +91,26 @@
         
         
         if (resultText.includes('not healthy')) {
-            $('.prediction-bar').css('border-left-color', '#ef4444'); // Red
+            $('.prediction-bar').css('border-left-color', '#ef4444'); 
             $('.prediction-icon').css({
-                'background-color': 'rgba(239, 68, 68, 0.1)', // Light red
-                'color': '#ef4444' // Red
+                'background-color': 'rgba(239, 68, 68, 0.1)', 
+                'color': '#ef4444' 
             });
         } 
         // Check for positive health indicators
         else if (resultText.includes('healthy') || resultText.includes('good') || resultText.includes('positive')) {
-            $('.prediction-bar').css('border-left-color', '#10b981'); // Green
+            $('.prediction-bar').css('border-left-color', '#10b981'); 
             $('.prediction-icon').css({
-                'background-color': 'rgba(16, 185, 129, 0.1)', // Light green
-                'color': '#10b981' // Green
+                'background-color': 'rgba(16, 185, 129, 0.1)', 
+                'color': '#10b981'
             });
         } 
         // Check for warning indicators
         else if (resultText.includes('caution') || resultText.includes('warning')) {
-            $('.prediction-bar').css('border-left-color', '#f59e0b'); // Amber
+            $('.prediction-bar').css('border-left-color', '#f59e0b'); 
             $('.prediction-icon').css({
-                'background-color': 'rgba(245, 158, 11, 0.1)', // Light amber
-                'color': '#f59e0b' // Amber
+                'background-color': 'rgba(245, 158, 11, 0.1)', 
+                'color': '#f59e0b' 
             });
         }
     });

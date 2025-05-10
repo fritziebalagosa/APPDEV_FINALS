@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Canine Health App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: #f8f9fa;
+            color: #343a40;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            padding: 1.5rem;
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin-bottom: 15px;
+            font-weight: 600;
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            letter-spacing: 0.5px;
+        }
+
+        h1 i {
+            margin-right: 12px;
+            font-size: 28px;
+        }
+
+        nav {
+            margin-top: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            display: inline-block;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 25px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        /* form styles */
+        form {
+            margin: 25px 0;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 95%;
+            padding: 12px;
+            margin-bottom: 5px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        button, 
+        input[type="submit"] {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+             width: 30%;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s;
+        }
+
+        button:hover,
+        input[type="submit"]:hover {
+            background: linear-gradient(135deg, #2980b9, #1c6ea4);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+        }
+
+        /* Card styles for content */
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-title {
+            color: #2c3e50;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        /* Status indicators */
+        .health-status {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .healthy {
+            background-color: #e3fcef;
+            color: #1cc88a;
+        }
+
+        .at-risk {
+            background-color: #fff8e6;
+            color: #f6c23e;
+        }
+
+        .needs-attention {
+            background-color: #ffeded;
+            color: #e74a3b;
+        }
+
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            text-align: left;
+            padding: 12px 15px;
+            font-weight: 600;
+            color: #2c3e50;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        tr:hover {
+            background-color: #f1f8ff;
+        }
+
+        /* Alert messages */
+        .alert {
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border-left: 4px solid;
+            display: none; /* Initially hidden */
+            position: relative;
+        }
+
+        .alert-success {
+            background-color: #e3fcef;
+            border-color: #1cc88a;
+            color: #13855c;
+        }
+
+        .alert-error {
+            background-color: #ffeded;
+            border-color: #e74a3b;
+            color: #be3c30;
+        }
+
+        .alert-info {
+            background-color: #e7f5ff;
+            border-color: #3498db;
+            color: #2171a1;
+        }
+
+        .alert-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            color: inherit;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .alert-close:hover {
+            opacity: 1;
+        }
+
+        /* Subtle animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        main {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+            }
+            
+            nav {
+                flex-direction: column;
+            }
+            
+            nav a {
+                width: 100%;
+                text-align: center;
+                margin-bottom: 5px;
+            }
+            
+            main {
+                padding: 15px;
+                margin: 15px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><i class="fas fa-dog"></i> Canine Wellness Classifier</h1>
+        <nav>
+            <a href="{% url 'home' %}"><i class="fas fa-home"></i> Home</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'predict' %}"><i class="fas fa-chart-line"></i> Predict</a>
+                <a href="{% url 'dashboard' %}"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Login</a>
+                <a href="{% url 'register' %}"><i class="fas fa-user-plus"></i> Register</a>
+            {% endif %}
+        </nav>
+    </header>
+    <main>
+        <!-- Alert container for dynamic alerts -->
+        <div id="alert-container"></div>
+        
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <script>
+        $(document).ready(function() {
+            // Function to show alert
+            function showAlert(message, type) {
+                // Create alert element
+                var alertClass = 'alert alert-' + type;
+                var alertHTML = '<div class="' + alertClass + '">' + 
+                                message + 
+                                '<span class="alert-close"><i class="fas fa-times"></i></span>' +
+                                '</div>';
+                
+                // Add to container
+                $('#alert-container').append(alertHTML);
+                
+                // Show with animation
+                $('.alert').last().hide().fadeIn(300);
+                
+                // Auto-hide after 5 seconds
+                setTimeout(function() {
+                    $('.alert').last().fadeOut(300, function() {
+                        $(this).remove();
+                    });
+                }, 5000);
+            }
+            
+            // Close alert when clicking the X
+            $(document).on('click', '.alert-close', function() {
+                $(this).parent().fadeOut(300, function() {
+                    $(this).remove();
+                });
+            });
+            
+        });
+    </script>
+</body>
+</html>

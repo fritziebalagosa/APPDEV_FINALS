@@ -1,0 +1,6 @@
+{% extends 'predictor/base.html' %}
+{% block content %}
+<h2>Dashboard</h2>
+<p>Distribution of health predictions from your dataset:</p>
+<img src="data:image/png;base64,{{ chart }}" alt="Health Chart">
+{% endblock %}
